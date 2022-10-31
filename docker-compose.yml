@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "default_pwd"
+    volumes:
+      - ./migrations:/migrations
+      - ./migrations.sh:/docker-entrypoint-initdb.d/migrations.sh
+  proxy:
+    image: envoyproxy/envoy-dev:582ae02170b4c0254d5b1b32172657bf961835a1
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "8086:8086"
