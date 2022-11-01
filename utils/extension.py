@@ -147,10 +147,10 @@ class Cache:
         except:
             return None
         if value.is_expired():
+            return None
+        else:
             v = value.get_value()
             return v
-        else:
-            return None
 
     async def clean(self):
         while True:
