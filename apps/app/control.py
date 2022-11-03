@@ -3,7 +3,7 @@ from utils.db.db import DB
 from apps.app.model import *
 from sqlalchemy import text
 from utils.jwt import authorize
-from utils.extension import Cache
+from utils.extension import Cache,LRUKCache
 from utils.response import Response,Meta,StatusCode
 from copy import copy
 
@@ -59,3 +59,12 @@ async def refresh_token(req: RefreshToken, cache:Cache) -> Response:
             err_code=StatusCode.BadRequest,
             err_message="refresh token 不存在或已过期!"
         ))
+
+async def put_lru2_cache(req: PutLruKCacheReq, cache: LRUKCache) -> Response:
+    cache.put(**req.dict())
+    return Response(meta=Meta.default(), body=None)
+
+async def get_lru2_cache(req: GetLruKCacheReq, cache: LRUKCache) -> Response:
+    result = cache.get(**req.dict())
+    res = GetLruCacheRes(key=req.key, value=result)
+    return Response(meta=Meta.default(), body=res)

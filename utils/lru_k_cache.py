@@ -74,7 +74,7 @@ class LRUKCache(BaseModel, Generic[K, V]):
                 self.history_cache[key] = (node, hit_count + 1)
         else:
             node = Node(elem=(key, value))
-            self.history_cache[key] = (node, 1)
+            self.history_cache[key] = (node, 0)
             self.history_linked_list.push_front_node(node)
             if self.history_linked_list.len > self.history_cap:
                 node = self.history_linked_list.pop_back_node()

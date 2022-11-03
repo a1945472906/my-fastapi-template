@@ -36,3 +36,15 @@ class LoginRes(BaseModel):
 
 class RefreshToken(BaseModel):
     refresh_token: str
+
+class PutLruKCacheReq(BaseModel):
+    key: str
+    value: str
+
+class GetLruKCacheReq(BaseModel):
+    key: str
+
+
+class GetLruCacheRes(BaseModel):
+    key: str
+    value: Optional[str]
